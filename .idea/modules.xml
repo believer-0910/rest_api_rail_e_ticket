@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/rail_e_ticket_api/rail_e_ticket_api.iml" filepath="$PROJECT_DIR$/rail_e_ticket_api/rail_e_ticket_api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/rest_api_rail_e_ticket.iml" filepath="$PROJECT_DIR$/.idea/rest_api_rail_e_ticket.iml" />
+    </modules>
+  </component>
+</project>
