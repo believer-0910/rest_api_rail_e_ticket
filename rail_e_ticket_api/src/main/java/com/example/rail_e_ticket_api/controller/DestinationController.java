@@ -4,10 +4,7 @@ import com.example.rail_e_ticket_api.dto.DestinationDto;
 import com.example.rail_e_ticket_api.service.DestinationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -23,5 +20,17 @@ public class DestinationController {
             @RequestBody @Valid DestinationDto destinationDto
     ) {
         return ResponseEntity.ok(destinationService.add(destinationDto));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> getDestinationById(
+        @RequestParam("id") Long id
+    ) {
+        return ResponseEntity.ok(destinationService.getById(id));
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<?> getDestinationList(){
+        return ResponseEntity.ok(destinationService.getList());
     }
 }
