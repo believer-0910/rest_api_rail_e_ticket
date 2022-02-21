@@ -5,14 +5,16 @@ import com.example.rail_e_ticket_api.entity.Destination;
 import com.example.rail_e_ticket_api.exception.CustomException;
 import com.example.rail_e_ticket_api.repository.DestinationRepository;
 import com.example.rail_e_ticket_api.response.ApiResponse;
-import com.example.rail_e_ticket_api.response.BaseResponse;
 import com.example.rail_e_ticket_api.service.base.BaseService;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import static com.example.rail_e_ticket_api.constants.ResponseConstants.*;
 
 @RequiredArgsConstructor
 @Service
@@ -25,27 +27,23 @@ public class DestinationService implements BaseService<DestinationDto> {
     public ApiResponse add(DestinationDto destinationDto) {
         checkDestination(destinationDto.getCode());
         Destination destination = mapper.map(destinationDto, Destination.class);
-        destinationRepository.save(destination);
-        return BaseResponse.SUCCESS;
+        Destination destination1 = destinationRepository.save(destination);
+        return new ApiResponse(SUCCESS, 200, destination1);
     }
 
     @Override
     public ApiResponse getById(Long id) {
         Optional<Destination> destination = destinationRepository.findById(id);
         if (destination.isPresent()){
-            ApiResponse apiResponse = new ApiResponse("success", 200);
-            apiResponse.setObject(destination);
-            return apiResponse;
+            return new ApiResponse(SUCCESS, 200, destination.get());
         }
-        throw new CustomException("Destination not found with this id: " + id);
+        throw new CustomException(NOT_FOUND);
     }
 
     @Override
     public ApiResponse getList() {
         List<Destination> destinationList = destinationRepository.findAll();
-        ApiResponse apiResponse = new ApiResponse("success", 200);
-        apiResponse.setObject(destinationList);
-        return apiResponse;
+        return new ApiResponse(SUCCESS, 200, destinationList);
     }
 
     @Override
@@ -54,11 +52,9 @@ public class DestinationService implements BaseService<DestinationDto> {
         if (destinationOptional.isPresent()){
             Destination destination = mapper.map(destinationDto, Destination.class);
             destination.setId(destinationOptional.get().getId());
-            ApiResponse apiResponse = new ApiResponse("success", 200);
-            apiResponse.setObject(destination);
-            return apiResponse;
+            return  new ApiResponse(SUCCESS, 200, destination);
         }
-        throw new CustomException("Destination not found with this id: " + id);
+        throw new CustomException(NOT_FOUND);
     }
 
     @Override
@@ -66,17 +62,15 @@ public class DestinationService implements BaseService<DestinationDto> {
         Optional<Destination> destination = destinationRepository.findById(id);
         if (destination.isPresent()){
             destinationRepository.delete(destination.get());
-            ApiResponse apiResponse = new ApiResponse("success", 200);
-            apiResponse.setObject(destination);
-            return apiResponse;
+            return new ApiResponse(SUCCESS, 200, destination.get());
         }
-        throw new CustomException("Destination not found with this id: " + id);
+        throw new CustomException(NOT_FOUND);
     }
 
     private void checkDestination(String code){
         Optional<Destination> destinationByCode = destinationRepository.findDestinationByCode(code);
 
         if (destinationByCode.isPresent())
-            throw new CustomException("Destination with this " + code + " code is already exist");
+            throw new CustomException(ALREADY_EXIST);
     }
 }

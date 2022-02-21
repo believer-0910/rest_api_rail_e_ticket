@@ -14,7 +14,15 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "price")
+@Table(
+        name = "price",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "fromStationToStation",
+                        columnNames = {"from_station_id", "to_station_id"}
+                )
+        }
+)
 public class Price extends BaseEntity {
 
     @ManyToOne(cascade = CascadeType.ALL)

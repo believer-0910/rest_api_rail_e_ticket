@@ -33,4 +33,19 @@ public class DestinationController {
     public ResponseEntity<?> getDestinationList(){
         return ResponseEntity.ok(destinationService.getList());
     }
+
+    @PutMapping("{id}")
+    public ResponseEntity<?> updateDestination(
+            @PathVariable("id") Long id,
+            @RequestBody DestinationDto destinationDto
+    ) {
+        return ResponseEntity.ok(destinationService.updateById(id, destinationDto));
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteDestination(
+            @PathVariable("id") Long id
+    ) {
+        return ResponseEntity.ok(destinationService.deleteById(id));
+    }
 }

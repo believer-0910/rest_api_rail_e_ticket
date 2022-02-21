@@ -5,4 +5,5 @@ public interface ResponseConstants {
     String SUCCESS = "SUCCESS";
     String ERROR = "ERROR";
     String LIST = "LIST";
+    String ALREADY_EXIST = "Already exist";
 }

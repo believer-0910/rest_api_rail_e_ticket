@@ -22,6 +22,6 @@ public class Train extends BaseEntity {
     @Column(name = "type", nullable = false)
     private String type;
 
-    @Column(name = "code", nullable = false)
+    @Column(unique = true, name = "code", nullable = false)
     private String code;
 }
