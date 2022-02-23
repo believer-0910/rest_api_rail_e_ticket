@@ -1,6 +1,6 @@
 package com.example.rail_e_ticket_api.controller;
 
-import com.example.rail_e_ticket_api.dto.TrainDto;
+import com.example.rail_e_ticket_api.payload.TrainDto;
 import com.example.rail_e_ticket_api.service.TrainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

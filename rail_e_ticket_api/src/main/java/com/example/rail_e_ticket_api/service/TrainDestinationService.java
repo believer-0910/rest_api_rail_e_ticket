@@ -1,22 +1,21 @@
 package com.example.rail_e_ticket_api.service;
 
-import com.example.rail_e_ticket_api.dto.TrainDestinationDto;
+import com.example.rail_e_ticket_api.payload.TrainDestinationDto;
 import com.example.rail_e_ticket_api.entity.TrainDestination;
 import com.example.rail_e_ticket_api.exception.CustomException;
 import com.example.rail_e_ticket_api.repository.TrainDestinationRepository;
 import com.example.rail_e_ticket_api.response.ApiResponse;
 import com.example.rail_e_ticket_api.service.base.BaseService;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Not;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import static com.example.rail_e_ticket_api.constants.ResponseConstants.*;
+import static com.example.rail_e_ticket_api.util.interfaces.ResponseConstants.*;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +26,7 @@ public class TrainDestinationService implements BaseService<TrainDestinationDto>
 
     @Override
     public ApiResponse add(TrainDestinationDto trainDestinationDto) {
-        checkTrainDestination(trainDestinationDto.getDepartureDate(), trainDestinationDto.getArriveDate(), trainDestinationDto.getPrice().getId());
+        checkTrainDestination(trainDestinationDto.getDepartureDate(), trainDestinationDto.getArriveDate());
         TrainDestination trainDestination = mapper.map(trainDestinationDto, TrainDestination.class);
         TrainDestination trainDestination1 = trainDestinationRepository.save(trainDestination);
         return new ApiResponse(SUCCESS, 200, trainDestination1);
@@ -45,7 +44,8 @@ public class TrainDestinationService implements BaseService<TrainDestinationDto>
     @Override
     public ApiResponse getList() {
         List<TrainDestination> trainDestinationList = trainDestinationRepository.findAll();
-        return new ApiResponse(SUCCESS, 200, trainDestinationList);
+        return trainDestinationList.isEmpty() ? new ApiResponse(NOT_FOUND, 404)
+                : new ApiResponse(SUCCESS, 200, trainDestinationList);
     }
 
     @Override
@@ -69,9 +69,9 @@ public class TrainDestinationService implements BaseService<TrainDestinationDto>
         throw new CustomException(NOT_FOUND);
     }
 
-    protected void checkTrainDestination(Date departureDate, Date arriveDate, Long priceId){
+    protected void checkTrainDestination(LocalDateTime departureDate, LocalDateTime arriveDate){
         Optional<TrainDestination> byDepartureDateAndArriveDateAndPriceId =
-                trainDestinationRepository.findByDepartureDateAndArriveDateAndPriceId(departureDate, arriveDate, priceId);
+                trainDestinationRepository.findByDepartureDateAndArriveDate(departureDate, arriveDate);
         if (byDepartureDateAndArriveDateAndPriceId.isPresent())
             throw new CustomException("Train is already is added this time: " + departureDate);
     }

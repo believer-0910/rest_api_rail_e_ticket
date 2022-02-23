@@ -24,15 +24,17 @@ public abstract class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     private boolean isActive = true;
 
     @CreationTimestamp
     private LocalDateTime createdDate;
+
     @UpdateTimestamp
     private LocalDateTime updatedDate;
+
     @CreatedBy
     private String createdBy;
+
     @LastModifiedBy
     private String updatedBy;
 

@@ -1,6 +1,6 @@
 package com.example.rail_e_ticket_api.service;
 
-import com.example.rail_e_ticket_api.dto.TrainDto;
+import com.example.rail_e_ticket_api.payload.TrainDto;
 import com.example.rail_e_ticket_api.entity.Train;
 import com.example.rail_e_ticket_api.exception.CustomException;
 import com.example.rail_e_ticket_api.repository.TrainRepository;
@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static com.example.rail_e_ticket_api.constants.ResponseConstants.NOT_FOUND;
-import static com.example.rail_e_ticket_api.constants.ResponseConstants.SUCCESS;
+import static com.example.rail_e_ticket_api.util.interfaces.ResponseConstants.NOT_FOUND;
+import static com.example.rail_e_ticket_api.util.interfaces.ResponseConstants.SUCCESS;
 
 @RequiredArgsConstructor
 @Service
@@ -41,7 +41,8 @@ public class TrainService implements BaseService<TrainDto> {
     @Override
     public ApiResponse getList() {
         List<Train> trainList = trainRepository.findAll();
-        return new ApiResponse(SUCCESS, 200, trainList);
+        return trainList.isEmpty() ? new ApiResponse(NOT_FOUND, 404)
+                : new ApiResponse(SUCCESS, 200, trainList);
     }
 
     @Override

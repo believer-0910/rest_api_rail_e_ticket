@@ -19,9 +19,9 @@ import javax.persistence.Table;
 @Table(name = "train")
 public class Train extends BaseEntity {
 
-    @Column(name = "type", nullable = false)
+    @Column(nullable = false)
     private String type;
 
-    @Column(unique = true, name = "code", nullable = false)
+    @Column(nullable = false)
     private String code;
 }

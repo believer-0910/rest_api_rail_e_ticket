@@ -1,6 +1,6 @@
 package com.example.rail_e_ticket_api.service;
 
-import com.example.rail_e_ticket_api.dto.PriceDto;
+import com.example.rail_e_ticket_api.payload.PriceDto;
 import com.example.rail_e_ticket_api.entity.Price;
 import com.example.rail_e_ticket_api.exception.CustomException;
 import com.example.rail_e_ticket_api.repository.PriceRepository;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static com.example.rail_e_ticket_api.constants.ResponseConstants.*;
+import static com.example.rail_e_ticket_api.util.interfaces.ResponseConstants.*;
 
 @RequiredArgsConstructor
 @Service
@@ -26,8 +26,7 @@ public class PriceService implements BaseService<PriceDto> {
     @Override
     public ApiResponse add(PriceDto priceDto) {
         checkPrice(priceDto.getFromStation().getId(), priceDto.getToStation().getId());
-        Price price = mapper.map(priceDto, Price.class);
-        return new ApiResponse(SUCCESS, 200, price);
+        return new ApiResponse(SUCCESS, 201, mapper.map(priceDto, Price.class));
     }
 
     @Override
@@ -42,7 +41,8 @@ public class PriceService implements BaseService<PriceDto> {
     @Override
     public ApiResponse getList() {
         List<Price> priceList = priceRepository.findAll();
-        return new ApiResponse(SUCCESS, 200, priceList);
+        return priceList.isEmpty()?new ApiResponse(NOT_FOUND,404)
+        :new ApiResponse(SUCCESS, 200, priceList);
     }
 
     @Override
@@ -51,8 +51,8 @@ public class PriceService implements BaseService<PriceDto> {
         if (priceRepositoryById.isPresent()){
             Price price = mapper.map(priceDto, Price.class);
             price.setId(id);
-            Price savedPrice = priceRepository.save(price);
-            return new ApiResponse(SUCCESS, 200, savedPrice);
+            priceRepository.save(price);
+            return new ApiResponse(SUCCESS, 202, price);
         }
         throw new CustomException(NOT_FOUND);
     }
@@ -62,14 +62,13 @@ public class PriceService implements BaseService<PriceDto> {
         Optional<Price> priceOptional = priceRepository.findById(id);
         if (priceOptional.isPresent()){
             priceRepository.delete(priceOptional.get());
-            return new ApiResponse(SUCCESS, 200, priceOptional.get());
+            return new ApiResponse(SUCCESS, 204, priceOptional.get());
         }
         throw new CustomException(NOT_FOUND);
     }
 
     protected void checkPrice(Long fromStationId, Long toStationId){
-        Optional<Price> byFromStationIdAndToStationId = priceRepository.findByFromStationIdAndToStationId(fromStationId, toStationId);
-        if (byFromStationIdAndToStationId.isPresent())
+        if (priceRepository.findByFromStationIdAndToStationId(fromStationId, toStationId).isPresent())
             throw new CustomException(ALREADY_EXIST);
     }
 }

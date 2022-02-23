@@ -1,6 +1,6 @@
 package com.example.rail_e_ticket_api.service;
 
-import com.example.rail_e_ticket_api.dto.DestinationDto;
+import com.example.rail_e_ticket_api.payload.DestinationDto;
 import com.example.rail_e_ticket_api.entity.Destination;
 import com.example.rail_e_ticket_api.exception.CustomException;
 import com.example.rail_e_ticket_api.repository.DestinationRepository;
@@ -13,21 +13,22 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static com.example.rail_e_ticket_api.constants.ResponseConstants.*;
+import static com.example.rail_e_ticket_api.util.interfaces.ResponseConstants.*;
 
 @RequiredArgsConstructor
 @Service
 public class DestinationService implements BaseService<DestinationDto> {
 
     private final DestinationRepository destinationRepository;
+
     private final ModelMapper mapper;
 
     @Override
     public ApiResponse add(DestinationDto destinationDto) {
         checkDestination(destinationDto.getCode());
         Destination destination = mapper.map(destinationDto, Destination.class);
-        Destination destination1 = destinationRepository.save(destination);
-        return new ApiResponse(SUCCESS, 200, destination1);
+        destinationRepository.save(destination);
+        return new ApiResponse(SUCCESS, 201, destination);
     }
 
     @Override
@@ -42,7 +43,8 @@ public class DestinationService implements BaseService<DestinationDto> {
     @Override
     public ApiResponse getList() {
         List<Destination> destinationList = destinationRepository.findAll();
-        return new ApiResponse(SUCCESS, 200, destinationList);
+        return destinationList.isEmpty()?new ApiResponse(NOT_FOUND,404)
+        :new ApiResponse(SUCCESS, 200, destinationList);
     }
 
     @Override
@@ -67,9 +69,7 @@ public class DestinationService implements BaseService<DestinationDto> {
     }
 
     private void checkDestination(String code) {
-        Optional<Destination> destinationByCode = destinationRepository.findDestinationByCode(code);
-
-        if (destinationByCode.isPresent())
+        if (destinationRepository.findByCode(code).isPresent())
             throw new CustomException(ALREADY_EXIST);
     }
 }

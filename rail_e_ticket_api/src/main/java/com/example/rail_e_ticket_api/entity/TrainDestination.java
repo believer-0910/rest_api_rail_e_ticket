@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -30,10 +31,10 @@ public class TrainDestination extends BaseEntity {
     private Station toStation;
 
     @Column(name = "departure_date", nullable = false)
-    private Date departureDate;
+    private LocalDateTime departureDate;
 
     @Column(name = "arrive_date", nullable = false)
-    private Date arriveDate;
+    private LocalDateTime arriveDate;
 
     @Column(name = "directions_code")
     private int directionsCode;
