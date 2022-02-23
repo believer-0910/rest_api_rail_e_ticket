@@ -6,7 +6,6 @@ import com.example.rail_e_ticket_api.exception.CustomException;
 import com.example.rail_e_ticket_api.repository.DestinationRepository;
 import com.example.rail_e_ticket_api.response.ApiResponse;
 import com.example.rail_e_ticket_api.service.base.BaseService;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -34,7 +33,7 @@ public class DestinationService implements BaseService<DestinationDto> {
     @Override
     public ApiResponse getById(Long id) {
         Optional<Destination> destination = destinationRepository.findById(id);
-        if (destination.isPresent()){
+        if (destination.isPresent()) {
             return new ApiResponse(SUCCESS, 200, destination.get());
         }
         throw new CustomException(NOT_FOUND);
@@ -49,10 +48,10 @@ public class DestinationService implements BaseService<DestinationDto> {
     @Override
     public ApiResponse updateById(Long id, DestinationDto destinationDto) {
         Optional<Destination> destinationOptional = destinationRepository.findById(id);
-        if (destinationOptional.isPresent()){
+        if (destinationOptional.isPresent()) {
             Destination destination = mapper.map(destinationDto, Destination.class);
             destination.setId(destinationOptional.get().getId());
-            return  new ApiResponse(SUCCESS, 200, destination);
+            return new ApiResponse(SUCCESS, 200, destination);
         }
         throw new CustomException(NOT_FOUND);
     }
@@ -60,14 +59,14 @@ public class DestinationService implements BaseService<DestinationDto> {
     @Override
     public ApiResponse deleteById(Long id) {
         Optional<Destination> destination = destinationRepository.findById(id);
-        if (destination.isPresent()){
+        if (destination.isPresent()) {
             destinationRepository.delete(destination.get());
             return new ApiResponse(SUCCESS, 200, destination.get());
         }
         throw new CustomException(NOT_FOUND);
     }
 
-    private void checkDestination(String code){
+    private void checkDestination(String code) {
         Optional<Destination> destinationByCode = destinationRepository.findDestinationByCode(code);
 
         if (destinationByCode.isPresent())
