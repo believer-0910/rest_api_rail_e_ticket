@@ -1,12 +1,13 @@
 package com.example.rail_e_ticket_api.entity;
 
 import com.example.rail_e_ticket_api.entity.base.BaseEntity;
-import lombok.*;
-import org.hibernate.annotations.IndexColumn;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -21,14 +22,21 @@ public class TrainDestination extends BaseEntity {
     private Train train;
 
     @ManyToOne
-    @JoinColumn(name = "price_id", referencedColumnName = "id")
-    private Price price;
+    @JoinColumn(name = "from_station_id", referencedColumnName = "id")
+    private Station fromStation;
+
+    @ManyToOne
+    @JoinColumn(name = "to_station_id", referencedColumnName = "id")
+    private Station toStation;
 
     @Column(name = "departure_date", nullable = false)
     private Date departureDate;
 
     @Column(name = "arrive_date", nullable = false)
     private Date arriveDate;
+
+    @Column(name = "directions_code")
+    private int directionsCode;
 
 
 }
