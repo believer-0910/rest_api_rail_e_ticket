@@ -13,7 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static com.example.rail_e_ticket_api.constants.ResponseConstants.*;
+import static com.example.rail_e_ticket_api.constants.ResponseConstants.NOT_FOUND;
+import static com.example.rail_e_ticket_api.constants.ResponseConstants.SUCCESS;
 
 @RequiredArgsConstructor
 @Service
@@ -31,7 +32,7 @@ public class TrainService implements BaseService<TrainDto> {
     @Override
     public ApiResponse getById(Long id) {
         Optional<Train> trainOptional = trainRepository.findById(id);
-        if (trainOptional.isPresent()){
+        if (trainOptional.isPresent()) {
             return new ApiResponse(SUCCESS, 200, trainOptional.get());
         }
         throw new CustomException(NOT_FOUND);
@@ -46,7 +47,7 @@ public class TrainService implements BaseService<TrainDto> {
     @Override
     public ApiResponse updateById(Long id, TrainDto trainDto) {
         Optional<Train> trainRepositoryById = trainRepository.findById(id);
-        if (trainRepositoryById.isPresent()){
+        if (trainRepositoryById.isPresent()) {
             Train train = mapper.map(trainDto, Train.class);
             train.setId(id);
             Train train1 = trainRepository.save(train);
@@ -58,14 +59,14 @@ public class TrainService implements BaseService<TrainDto> {
     @Override
     public ApiResponse deleteById(Long id) {
         Optional<Train> trainRepositoryById = trainRepository.findById(id);
-        if (trainRepositoryById.isPresent()){
+        if (trainRepositoryById.isPresent()) {
             trainRepository.delete(trainRepositoryById.get());
             return new ApiResponse(SUCCESS, 200, trainRepositoryById.get());
         }
         throw new CustomException(NOT_FOUND);
     }
 
-    private void checkTrain(String code){
+    private void checkTrain(String code) {
         Optional<Train> trainOptional = trainRepository.findByCode(code);
 
         if (trainOptional.isPresent())
