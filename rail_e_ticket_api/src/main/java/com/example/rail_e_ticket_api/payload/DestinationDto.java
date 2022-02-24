@@ -16,5 +16,5 @@ public class DestinationDto {
     private String name;
 
     @NotNull
-    private String code;
+    private int code;
 }

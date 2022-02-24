@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.example.rail_e_ticket_api.util.interfaces.ResponseConstants.NOT_FOUND;
 import static com.example.rail_e_ticket_api.util.interfaces.ResponseConstants.SUCCESS;
@@ -32,7 +33,7 @@ public class CarService implements BaseService<CarDto> {
     }
 
     @Override
-    public ApiResponse getById(Long id) {
+    public ApiResponse getById(UUID id) {
         Optional<Car> carOptional = carRepository.findById(id);
         if (carOptional.isPresent())
             return new ApiResponse(SUCCESS, 200, carOptional.get());
@@ -46,7 +47,7 @@ public class CarService implements BaseService<CarDto> {
     }
 
     @Override
-    public ApiResponse updateById(Long id, CarDto carDto) {
+    public ApiResponse updateById(UUID id, CarDto carDto) {
         Optional<Car> optionalCar = carRepository.findById(id);
         if (optionalCar.isPresent()) {
             Car car = modelMapper.map(carDto, Car.class);
@@ -58,7 +59,7 @@ public class CarService implements BaseService<CarDto> {
     }
 
     @Override
-    public ApiResponse deleteById(Long id) {
+    public ApiResponse deleteById(UUID id) {
         Optional<Car> optionalCar = carRepository.findById(id);
         if (optionalCar.isPresent()){
             carRepository.deleteById(optionalCar.get().getId());

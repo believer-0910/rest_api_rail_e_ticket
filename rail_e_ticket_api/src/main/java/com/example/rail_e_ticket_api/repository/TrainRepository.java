@@ -4,7 +4,8 @@ import com.example.rail_e_ticket_api.entity.Train;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
+import java.util.UUID;
 
-public interface TrainRepository extends JpaRepository<Train, Long> {
+public interface TrainRepository extends JpaRepository<Train, UUID> {
     Optional<Train> findByCode(String code);
 }

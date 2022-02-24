@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -15,12 +16,12 @@ public class CarController {
     private final CarService carService;
 
     @PostMapping("/add")
-    public ResponseEntity<?> addCar(@RequestBody @Valid CarDto carDto) {
+    public ResponseEntity<?> addCar(@Valid @RequestBody CarDto carDto) {
         return ResponseEntity.ok(carService.add(carDto));
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> getCarById(@RequestParam("id") Long id) {
+    public ResponseEntity<?> getCarById(@RequestParam("id") UUID id) {
         return ResponseEntity.ok(carService.getById(id));
     }
 
@@ -30,12 +31,12 @@ public class CarController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> updateCar(@PathVariable("id") Long id, @RequestBody CarDto carDto) {
+    public ResponseEntity<?> updateCar(@PathVariable("id") UUID id, @RequestBody CarDto carDto) {
         return ResponseEntity.ok(carService.updateById(id, carDto));
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<?> deleteCar(@PathVariable("id") Long id) {
+    public ResponseEntity<?> deleteCar(@PathVariable("id") UUID id) {
         return ResponseEntity.ok(carService.deleteById(id));
     }
 

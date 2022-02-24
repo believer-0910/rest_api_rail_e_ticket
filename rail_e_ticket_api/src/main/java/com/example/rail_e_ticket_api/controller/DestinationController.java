@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class DestinationController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> getDestinationById(@RequestParam("id") Long id) {
+    public ResponseEntity<?> getDestinationById(@RequestParam("id") UUID id) {
         return ResponseEntity.ok(destinationService.getById(id));
     }
 
@@ -31,12 +32,12 @@ public class DestinationController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> updateDestination(@PathVariable("id") Long id, @RequestBody DestinationDto destinationDto) {
+    public ResponseEntity<?> updateDestination(@PathVariable("id") UUID id, @RequestBody DestinationDto destinationDto) {
         return ResponseEntity.ok(destinationService.updateById(id, destinationDto));
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<?> deleteDestination(@PathVariable("id") Long id) {
+    public ResponseEntity<?> deleteDestination(@PathVariable("id") UUID id) {
         return ResponseEntity.ok(destinationService.deleteById(id));
     }
 }

@@ -22,6 +22,9 @@ public class Owner extends BaseEntity {
     @Column(unique = true)
     private String username;
 
+    @Column(unique = true)
+    private String email;
+
     private String password;
 
     private int userRole;

@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
@@ -23,7 +24,7 @@ public class TrainController {
 
     @GetMapping("/search")
     public ResponseEntity<?> getTrainById(
-            @RequestParam("id") Long id
+            @RequestParam("id") UUID id
     ) {
         return ResponseEntity.ok(trainService.getById(id));
     }
@@ -35,7 +36,7 @@ public class TrainController {
 
     @PutMapping("{id}")
     public ResponseEntity<?> updateTrain(
-            @PathVariable("id") Long id,
+            @PathVariable("id") UUID id,
             @RequestBody TrainDto trainDto
     ) {
         return ResponseEntity.ok(trainService.updateById(id, trainDto));
@@ -43,7 +44,7 @@ public class TrainController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> deleteTrain(
-            @PathVariable("id") Long id
+            @PathVariable("id") UUID id
     ) {
         return ResponseEntity.ok(trainService.deleteById(id));
     }

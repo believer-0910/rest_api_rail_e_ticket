@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.example.rail_e_ticket_api.util.interfaces.ResponseConstants.*;
 
@@ -33,7 +34,7 @@ public class TrainDestinationService implements BaseService<TrainDestinationDto>
     }
 
     @Override
-    public ApiResponse getById(Long id) {
+    public ApiResponse getById(UUID id) {
         Optional<TrainDestination> trainDestination = trainDestinationRepository.findById(id);
         if (trainDestination.isPresent()){
             return new ApiResponse(SUCCESS, 200, trainDestination.get());
@@ -49,7 +50,7 @@ public class TrainDestinationService implements BaseService<TrainDestinationDto>
     }
 
     @Override
-    public ApiResponse updateById(Long id, TrainDestinationDto trainDestinationDto) {
+    public ApiResponse updateById(UUID id, TrainDestinationDto trainDestinationDto) {
         Optional<TrainDestination> trainDestination = trainDestinationRepository.findById(id);
         if (trainDestination.isPresent()){
             TrainDestination trainDestination1 = mapper.map(trainDestinationDto, TrainDestination.class);
@@ -60,7 +61,7 @@ public class TrainDestinationService implements BaseService<TrainDestinationDto>
     }
 
     @Override
-    public ApiResponse deleteById(Long id) {
+    public ApiResponse deleteById(UUID id) {
         Optional<TrainDestination> trainDestinationRepositoryById = trainDestinationRepository.findById(id);
         if (trainDestinationRepositoryById.isPresent()){
             trainDestinationRepository.delete(trainDestinationRepositoryById.get());

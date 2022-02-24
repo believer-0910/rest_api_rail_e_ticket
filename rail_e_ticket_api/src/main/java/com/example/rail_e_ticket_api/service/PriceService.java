@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.example.rail_e_ticket_api.util.interfaces.ResponseConstants.*;
 
@@ -30,7 +31,7 @@ public class PriceService implements BaseService<PriceDto> {
     }
 
     @Override
-    public ApiResponse getById(Long id) {
+    public ApiResponse getById(UUID id) {
         Optional<Price> priceOptional = priceRepository.findById(id);
         if (priceOptional.isPresent()){
             return new ApiResponse(SUCCESS, 200, priceOptional.get());
@@ -46,7 +47,7 @@ public class PriceService implements BaseService<PriceDto> {
     }
 
     @Override
-    public ApiResponse updateById(Long id, PriceDto priceDto) {
+    public ApiResponse updateById(UUID id, PriceDto priceDto) {
         Optional<Price> priceRepositoryById = priceRepository.findById(id);
         if (priceRepositoryById.isPresent()){
             Price price = mapper.map(priceDto, Price.class);
@@ -58,7 +59,7 @@ public class PriceService implements BaseService<PriceDto> {
     }
 
     @Override
-    public ApiResponse deleteById(Long id) {
+    public ApiResponse deleteById(UUID id) {
         Optional<Price> priceOptional = priceRepository.findById(id);
         if (priceOptional.isPresent()){
             priceRepository.delete(priceOptional.get());
@@ -67,7 +68,7 @@ public class PriceService implements BaseService<PriceDto> {
         throw new CustomException(NOT_FOUND);
     }
 
-    protected void checkPrice(Long fromStationId, Long toStationId){
+    protected void checkPrice(UUID fromStationId, UUID toStationId){
         if (priceRepository.findByFromStationIdAndToStationId(fromStationId, toStationId).isPresent())
             throw new CustomException(ALREADY_EXIST);
     }

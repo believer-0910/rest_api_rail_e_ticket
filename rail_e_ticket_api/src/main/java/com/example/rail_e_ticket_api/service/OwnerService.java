@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.example.rail_e_ticket_api.util.interfaces.ResponseConstants.*;
 
@@ -31,7 +32,7 @@ public class OwnerService implements BaseService<OwnerDto> {
     }
 
     @Override
-    public ApiResponse getById(Long id) {
+    public ApiResponse getById(UUID id) {
         Optional<Owner> optionalOwner = ownerRepository.findById(id);
         if (optionalOwner.isPresent())
             return new ApiResponse(SUCCESS, 200, optionalOwner.get());
@@ -45,7 +46,7 @@ public class OwnerService implements BaseService<OwnerDto> {
     }
 
     @Override
-    public ApiResponse updateById(Long id, OwnerDto ownerDto) {
+    public ApiResponse updateById(UUID id, OwnerDto ownerDto) {
         Optional<Owner> optionalOwner = ownerRepository.findById(id);
         if (optionalOwner.isPresent()){
             Owner owner = modelMapper.map(ownerDto, Owner.class);
@@ -57,7 +58,7 @@ public class OwnerService implements BaseService<OwnerDto> {
     }
 
     @Override
-    public ApiResponse deleteById(Long id) {
+    public ApiResponse deleteById(UUID id) {
         Optional<Owner> optionalOwner = ownerRepository.findById(id);
         if (optionalOwner.isPresent()){
             ownerRepository.deleteById(optionalOwner.get().getId());

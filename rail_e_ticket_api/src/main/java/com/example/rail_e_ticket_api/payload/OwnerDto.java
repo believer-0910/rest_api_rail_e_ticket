@@ -21,6 +21,9 @@ public class OwnerDto {
     private String userName;
 
     @NotNull
+    private String email;
+
+    @NotNull
     private String password;
 
     @NotNull

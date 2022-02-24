@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,7 +24,7 @@ public class PriceController {
 
     @GetMapping("/search")
     public ResponseEntity<?> getPriceById(
-            @RequestParam("id") Long id
+            @RequestParam("id") UUID id
     ) {
         return ResponseEntity.ok(priceService.getById(id));
     }
@@ -35,7 +36,7 @@ public class PriceController {
 
     @PutMapping("{id}")
     public ResponseEntity<?> updatePrice(
-            @PathVariable("id") Long id,
+            @PathVariable("id") UUID id,
             @RequestBody PriceDto priceDto
     ) {
         return ResponseEntity.ok(priceService.updateById(id, priceDto));
@@ -43,7 +44,7 @@ public class PriceController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> deletePrice(
-            @PathVariable("id") Long id
+            @PathVariable("id") UUID id
     ) {
         return ResponseEntity.ok(priceService.deleteById(id));
     }

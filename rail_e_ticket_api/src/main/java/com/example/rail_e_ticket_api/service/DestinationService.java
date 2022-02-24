@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.example.rail_e_ticket_api.util.interfaces.ResponseConstants.*;
 
@@ -32,7 +33,7 @@ public class DestinationService implements BaseService<DestinationDto> {
     }
 
     @Override
-    public ApiResponse getById(Long id) {
+    public ApiResponse getById(UUID id) {
         Optional<Destination> destination = destinationRepository.findById(id);
         if (destination.isPresent()) {
             return new ApiResponse(SUCCESS, 200, destination.get());
@@ -48,7 +49,7 @@ public class DestinationService implements BaseService<DestinationDto> {
     }
 
     @Override
-    public ApiResponse updateById(Long id, DestinationDto destinationDto) {
+    public ApiResponse updateById(UUID id, DestinationDto destinationDto) {
         Optional<Destination> destinationOptional = destinationRepository.findById(id);
         if (destinationOptional.isPresent()) {
             Destination destination = mapper.map(destinationDto, Destination.class);
@@ -59,7 +60,7 @@ public class DestinationService implements BaseService<DestinationDto> {
     }
 
     @Override
-    public ApiResponse deleteById(Long id) {
+    public ApiResponse deleteById(UUID id) {
         Optional<Destination> destination = destinationRepository.findById(id);
         if (destination.isPresent()) {
             destinationRepository.delete(destination.get());
@@ -68,7 +69,7 @@ public class DestinationService implements BaseService<DestinationDto> {
         throw new CustomException(NOT_FOUND);
     }
 
-    private void checkDestination(String code) {
+    private void checkDestination(int code) {
         if (destinationRepository.findByCode(code).isPresent())
             throw new CustomException(ALREADY_EXIST);
     }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.example.rail_e_ticket_api.util.interfaces.ResponseConstants.*;
 
@@ -32,7 +33,7 @@ public class StationService implements BaseService<StationDto> {
     }
 
     @Override
-    public ApiResponse getById(Long id) {
+    public ApiResponse getById(UUID id) {
         Optional<Station> station = stationRepository.findById(id);
         if (station.isPresent())
             return new ApiResponse(SUCCESS, 201, station.get());
@@ -47,7 +48,7 @@ public class StationService implements BaseService<StationDto> {
     }
 
     @Override
-    public ApiResponse updateById(Long id, StationDto stationDto) {
+    public ApiResponse updateById(UUID id, StationDto stationDto) {
         Optional<Station> optionalStation = stationRepository.findById(id);
         if (optionalStation.isPresent()) {
             Station station = mapper.map(stationDto, Station.class);
@@ -59,7 +60,7 @@ public class StationService implements BaseService<StationDto> {
     }
 
     @Override
-    public ApiResponse deleteById(Long id) {
+    public ApiResponse deleteById(UUID id) {
         Optional<Station> station = stationRepository.findById(id);
         if (station.isPresent()) {
             stationRepository.delete(station.get());
@@ -68,7 +69,7 @@ public class StationService implements BaseService<StationDto> {
         throw new CustomException(NOT_FOUND);
     }
 
-    protected void checkStation(Long destinationId, String name) {
+    protected void checkStation(UUID destinationId, String name) {
         Optional<Station> byDestinationIdAndName = stationRepository.findByDestinationIdAndName(destinationId, name);
         if (byDestinationIdAndName.isPresent())
             throw new CustomException("Station already exist with destination id: " + destinationId + " and name: " + name);

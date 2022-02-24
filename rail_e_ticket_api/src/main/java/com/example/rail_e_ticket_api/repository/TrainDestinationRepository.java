@@ -7,7 +7,8 @@ import java.lang.management.OperatingSystemMXBean;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Optional;
+import java.util.UUID;
 
-public interface TrainDestinationRepository extends JpaRepository<TrainDestination, Long> {
+public interface TrainDestinationRepository extends JpaRepository<TrainDestination, UUID> {
     Optional<TrainDestination> findByDepartureDateAndArriveDate(LocalDateTime departureDate, LocalDateTime arriveDate);
 }
