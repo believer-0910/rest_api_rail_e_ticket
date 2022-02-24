@@ -17,8 +17,7 @@ public class OwnerDto {
     private String name;
 
     @NotNull
-    @JsonProperty("user_name")
-    private String userName;
+    private String username;
 
     @NotNull
     private String email;

@@ -17,9 +17,22 @@ public class ApiResponse {
     @JsonProperty("status_code")
     private int statusCode;
     private Object object;
+    private boolean success;
 
     public ApiResponse(String message, int statusCode) {
         this.message = message;
         this.statusCode = statusCode;
+    }
+
+    public ApiResponse(String message, int statusCode, Object object) {
+        this.message = message;
+        this.statusCode = statusCode;
+        this.object = object;
+    }
+
+    public ApiResponse(String message, int statusCode, boolean success) {
+        this.message = message;
+        this.statusCode = statusCode;
+        this.success = success;
     }
 }
