@@ -30,6 +30,10 @@ public class TrainDestination extends BaseEntity {
     @JoinColumn(name = "to_station_id", referencedColumnName = "id")
     private Station toStation;
 
+    @ManyToMany
+    @JoinColumn(name = "to_station_id", referencedColumnName = "id")
+    private Station station;
+
     @Column(name = "departure_date", nullable = false)
     private LocalDateTime departureDate;
 
@@ -38,6 +42,5 @@ public class TrainDestination extends BaseEntity {
 
     @Column(name = "directions_code")
     private int directionsCode;
-
 
 }

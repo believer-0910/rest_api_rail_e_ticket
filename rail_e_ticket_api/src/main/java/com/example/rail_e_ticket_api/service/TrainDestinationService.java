@@ -1,8 +1,11 @@
 package com.example.rail_e_ticket_api.service;
 
+import com.example.rail_e_ticket_api.entity.Station;
 import com.example.rail_e_ticket_api.payload.TrainDestinationDto;
 import com.example.rail_e_ticket_api.entity.TrainDestination;
 import com.example.rail_e_ticket_api.exception.CustomException;
+import com.example.rail_e_ticket_api.payload.TrainSearchRequestDTO;
+import com.example.rail_e_ticket_api.payload.TrainSearchResponseDTO;
 import com.example.rail_e_ticket_api.repository.TrainDestinationRepository;
 import com.example.rail_e_ticket_api.response.ApiResponse;
 import com.example.rail_e_ticket_api.service.base.BaseService;
@@ -10,7 +13,9 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +28,7 @@ public class TrainDestinationService implements BaseService<TrainDestinationDto>
 
     private final TrainDestinationRepository trainDestinationRepository;
     private final ModelMapper mapper;
+    private final StationService stationService;
 
     @Override
     public ApiResponse add(TrainDestinationDto trainDestinationDto) {
@@ -74,5 +80,16 @@ public class TrainDestinationService implements BaseService<TrainDestinationDto>
                 trainDestinationRepository.findByDepartureDateAndArriveDate(departureDate, arriveDate);
         if (byDepartureDateAndArriveDateAndPriceId.isPresent())
             throw new CustomException("Train is already is added this time: " + departureDate);
+    }
+
+    public List<TrainDestination> getTrainsBySearch(TrainSearchRequestDTO trainSearchRequestDTO) {
+        List<TrainSearchResponseDTO> trains = new ArrayList<>();
+        int fromDestinationCode = trainSearchRequestDTO.getFromDestinationCode();
+        int toDestinationCode = trainSearchRequestDTO.getToDestinationCode();
+        LocalDate date = trainSearchRequestDTO.getDate();
+        if (toDestinationCode > fromDestinationCode) {
+            return trainDestinationRepository.getTrainsFromTo()
+
+        }
     }
 }

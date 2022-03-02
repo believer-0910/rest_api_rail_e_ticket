@@ -73,4 +73,8 @@ public class StationService implements BaseService<StationDto> {
         if (byDestinationIdAndName.isPresent())
             throw new CustomException("Station already exist with destination id: " + destinationId + " and name: " + name);
     }
+
+    public List<Station> getListByDestinationId(Long id) {
+        return stationRepository.findStationsByDestinationId(id);
+    }
 }
