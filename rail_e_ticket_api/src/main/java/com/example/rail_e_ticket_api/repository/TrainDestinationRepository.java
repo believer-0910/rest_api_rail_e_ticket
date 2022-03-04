@@ -17,4 +17,6 @@ public interface TrainDestinationRepository extends JpaRepository<TrainDestinati
     @Query(value = "select distinct * from train_destination where directions_code & ?1 <> 0 " +
             "and direction_code & ?2 and ?2 > ?1 and departure_date::date = ?3 order by created_date", nativeQuery = true)
     List<TrainDestination> getTrainsFromTo(int fromCode, int toCode, LocalDate date);
+
+    List<TrainDestination> findAllByStation_Destination_Code(int station_destination_code);
 }

@@ -14,12 +14,11 @@ public class TrainSearchResponseDTO {
     private long id;
     private String trainCode;
     private String trainType;
-    private String fromStation;
     private String fromDestination;
+    private String toDestination;
+    private String fromStation;
     private LocalDateTime departureTime;
     private String toStation;
-    private String toDestination;
     private LocalDateTime arrivalTime;
-    private LocalDateTime differenceTime;
-    private List<TrainCarResponseDTO> cars;
+    private long differenceTimeInMinutes;
 }
