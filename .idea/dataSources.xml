@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:postgresql://localhost:5432/rail_e_ticket</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="e-ticket-team@localhost" uuid="e0131b26-2d33-4823-a176-02709b670352">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/e-ticket-team</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

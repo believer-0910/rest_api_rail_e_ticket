@@ -3,6 +3,9 @@ package com.example.rail_e_ticket_api.service;
 import com.example.rail_e_ticket_api.payload.TrainDto;
 import com.example.rail_e_ticket_api.entity.Train;
 import com.example.rail_e_ticket_api.exception.CustomException;
+import com.example.rail_e_ticket_api.payload.TrainSearchRequestDTO;
+import com.example.rail_e_ticket_api.payload.TrainSearchResponseDTO;
+import com.example.rail_e_ticket_api.repository.TrainDestinationRepository;
 import com.example.rail_e_ticket_api.repository.TrainRepository;
 import com.example.rail_e_ticket_api.response.ApiResponse;
 import com.example.rail_e_ticket_api.service.base.BaseService;
@@ -10,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -21,6 +25,7 @@ import static com.example.rail_e_ticket_api.util.interfaces.ResponseConstants.SU
 @Service
 public class TrainService implements BaseService<TrainDto> {
     private final TrainRepository trainRepository;
+    private final TrainDestinationRepository trainDestinationRepository;
     private final ModelMapper mapper;
 
     @Override
@@ -75,4 +80,6 @@ public class TrainService implements BaseService<TrainDto> {
         if (trainOptional.isPresent())
             throw new CustomException("Destination with this " + code + " code is already exist");
     }
+
+
 }
