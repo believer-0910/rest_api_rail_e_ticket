@@ -6,8 +6,8 @@ import java.util.UUID;
 
 public interface BaseService <T>{
     ApiResponse add(T t);
-    ApiResponse getById(UUID id);
+    ApiResponse getById(Long id);
     ApiResponse getList();
-    ApiResponse updateById(UUID id, T t);
-    ApiResponse deleteById(UUID id);
+    ApiResponse updateById(Long id, T t);
+    ApiResponse deleteById(Long id);
 }

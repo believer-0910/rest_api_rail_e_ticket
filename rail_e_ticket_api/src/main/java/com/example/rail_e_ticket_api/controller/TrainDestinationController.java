@@ -24,7 +24,7 @@ public class TrainDestinationController {
 
     @GetMapping("/search")
     public ResponseEntity<?> getTrainDestinationById(
-            @RequestParam("id") UUID id
+            @RequestParam("id") Long id
     ) {
         return ResponseEntity.ok(trainDestinationService.getById(id));
     }
@@ -36,7 +36,7 @@ public class TrainDestinationController {
 
     @PutMapping("{id}")
     public ResponseEntity<?> updateTrainDestination(
-            @PathVariable("id") UUID id,
+            @PathVariable("id") Long id,
             @RequestBody TrainDestinationDto trainDestinationDto
     ) {
         return ResponseEntity.ok(trainDestinationService.updateById(id, trainDestinationDto));
@@ -44,7 +44,7 @@ public class TrainDestinationController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> deleteTrainDestination(
-            @PathVariable("id") UUID id
+            @PathVariable("id") Long id
     ) {
         return ResponseEntity.ok(trainDestinationService.deleteById(id));
     }

@@ -14,8 +14,11 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CarDto {
+
+    private Long id;
+
     @NotNull
-    private Train train;
+    private Long trainId;
 
     @NotNull
     private String type;

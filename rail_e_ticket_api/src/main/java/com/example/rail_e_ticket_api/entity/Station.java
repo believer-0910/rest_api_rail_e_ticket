@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -17,10 +19,12 @@ import javax.persistence.*;
 @Table(name = "station")
 public class Station extends BaseEntity {
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "destination_id", referencedColumnName = "id")
-    private Destination destination;
-
     @Column(nullable = false)
     private String name;
+
+
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne
+    @JoinColumn(name = "destination_id", referencedColumnName = "id")
+    private Destination destination;
 }

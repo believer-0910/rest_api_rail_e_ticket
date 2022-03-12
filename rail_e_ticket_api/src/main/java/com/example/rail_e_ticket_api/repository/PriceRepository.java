@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface PriceRepository extends JpaRepository<Price, UUID> {
-    Optional<Price> findByFromStationIdAndToStationId(UUID fromStation_id, UUID toStation_id);
+public interface PriceRepository extends JpaRepository<Price, Long> {
+    Optional<Price> findByFromStationIdAndToStationId(Long fromStation_id, Long toStation_id);
 }

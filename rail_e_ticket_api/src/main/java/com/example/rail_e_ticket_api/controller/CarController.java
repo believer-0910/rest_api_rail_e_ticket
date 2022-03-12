@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -15,28 +14,25 @@ import java.util.UUID;
 public class CarController {
     private final CarService carService;
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<?> addCar(@Valid @RequestBody CarDto carDto) {
         return ResponseEntity.ok(carService.add(carDto));
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<?> getCarById(@RequestParam("id") UUID id) {
+    @GetMapping("/search") public ResponseEntity<?> getCarById(@RequestParam("id") Long id) {
         return ResponseEntity.ok(carService.getById(id));
     }
 
-    @GetMapping("/list")
+    @GetMapping
     public ResponseEntity<?> getCarList() {
         return ResponseEntity.ok(carService.getList());
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<?> updateCar(@PathVariable("id") UUID id, @RequestBody CarDto carDto) {
+    @PutMapping("{id}") public ResponseEntity<?> updateCar(@PathVariable("id") Long id, @RequestBody CarDto carDto) {
         return ResponseEntity.ok(carService.updateById(id, carDto));
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<?> deleteCar(@PathVariable("id") UUID id) {
+    @DeleteMapping("{id}") public ResponseEntity<?> deleteCar(@PathVariable("id") Long id) {
         return ResponseEntity.ok(carService.deleteById(id));
     }
 

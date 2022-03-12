@@ -32,7 +32,7 @@ public class TicketService implements BaseService<TicketDto> {
     }
 
     @Override
-    public ApiResponse getById(UUID id) {
+    public ApiResponse getById(Long id) {
         Optional<Ticket> optionalTicket = ticketRepository.findById(id);
         if (optionalTicket.isPresent()){
             return new ApiResponse(SUCCESS,200,optionalTicket.get());
@@ -47,7 +47,7 @@ public class TicketService implements BaseService<TicketDto> {
     }
 
     @Override
-    public ApiResponse updateById(UUID id, TicketDto ticketDto) {
+    public ApiResponse updateById(Long id, TicketDto ticketDto) {
         Optional<Ticket> optionalTicket = ticketRepository.findById(id);
         if (optionalTicket.isPresent()){
             Ticket ticket = modelMapper.map(ticketDto, Ticket.class);
@@ -59,7 +59,7 @@ public class TicketService implements BaseService<TicketDto> {
     }
 
     @Override
-    public ApiResponse deleteById(UUID id) {
+    public ApiResponse deleteById(Long id) {
         Optional<Ticket> optionalTicket = ticketRepository.findById(id);
         if (optionalTicket.isPresent()){
             ticketRepository.deleteById(optionalTicket.get().getId());

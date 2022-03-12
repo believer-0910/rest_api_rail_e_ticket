@@ -27,11 +27,12 @@ public class TrainService implements BaseService<TrainDto> {
     public ApiResponse add(TrainDto trainDto) {
         checkTrain(trainDto.getCode());
         Train train = mapper.map(trainDto, Train.class);
+        trainRepository.save(train);
         return new ApiResponse(SUCCESS, 200, train);
     }
 
     @Override
-    public ApiResponse getById(UUID id) {
+    public ApiResponse getById(Long id) {
         Optional<Train> trainOptional = trainRepository.findById(id);
         if (trainOptional.isPresent()) {
             return new ApiResponse(SUCCESS, 200, trainOptional.get());
@@ -42,24 +43,24 @@ public class TrainService implements BaseService<TrainDto> {
     @Override
     public ApiResponse getList() {
         List<Train> trainList = trainRepository.findAll();
-        return trainList.isEmpty() ? new ApiResponse(NOT_FOUND, 404)
-                : new ApiResponse(SUCCESS, 200, trainList);
+        return  new ApiResponse(SUCCESS, 200, trainList);
     }
 
     @Override
-    public ApiResponse updateById(UUID id, TrainDto trainDto) {
+    public ApiResponse updateById(Long id, TrainDto trainDto) {
         Optional<Train> trainRepositoryById = trainRepository.findById(id);
         if (trainRepositoryById.isPresent()) {
-            Train train = mapper.map(trainDto, Train.class);
-            train.setId(id);
-            Train train1 = trainRepository.save(train);
-            return new ApiResponse(SUCCESS, 200, train1);
+            Train train = trainRepositoryById.get();
+            train.setCode(trainDto.getCode());
+            train.setType(trainDto.getType());
+            trainRepository.save(train);
+            return new ApiResponse(SUCCESS, 200, train);
         }
         throw new CustomException(NOT_FOUND);
     }
 
     @Override
-    public ApiResponse deleteById(UUID id) {
+    public ApiResponse deleteById(Long id) {
         Optional<Train> trainRepositoryById = trainRepository.findById(id);
         if (trainRepositoryById.isPresent()) {
             trainRepository.delete(trainRepositoryById.get());

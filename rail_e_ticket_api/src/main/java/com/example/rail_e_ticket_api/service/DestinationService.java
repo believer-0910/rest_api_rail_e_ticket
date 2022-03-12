@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+
 
 import static com.example.rail_e_ticket_api.util.interfaces.ResponseConstants.*;
 
@@ -25,7 +25,7 @@ public class DestinationService implements BaseService<DestinationDto> {
     private final ModelMapper mapper;
 
     @Override
-    public ApiResponse add(DestinationDto destinationDto) {
+    public ApiResponse add(DestinationDto destinationDto){
         checkDestination(destinationDto.getCode());
         Destination destination = mapper.map(destinationDto, Destination.class);
         destinationRepository.save(destination);
@@ -33,7 +33,7 @@ public class DestinationService implements BaseService<DestinationDto> {
     }
 
     @Override
-    public ApiResponse getById(UUID id) {
+    public ApiResponse getById(Long id) {
         Optional<Destination> destination = destinationRepository.findById(id);
         if (destination.isPresent()) {
             return new ApiResponse(SUCCESS, 200, destination.get());
@@ -43,24 +43,23 @@ public class DestinationService implements BaseService<DestinationDto> {
 
     @Override
     public ApiResponse getList() {
-        List<Destination> destinationList = destinationRepository.findAll();
-        return destinationList.isEmpty()?new ApiResponse(NOT_FOUND,404)
-        :new ApiResponse(SUCCESS, 200, destinationList);
+        return new ApiResponse(SUCCESS, 200, destinationRepository.findAll());
     }
 
     @Override
-    public ApiResponse updateById(UUID id, DestinationDto destinationDto) {
+    public ApiResponse updateById(Long id, DestinationDto destinationDto) {
         Optional<Destination> destinationOptional = destinationRepository.findById(id);
         if (destinationOptional.isPresent()) {
-            Destination destination = mapper.map(destinationDto, Destination.class);
-            destination.setId(destinationOptional.get().getId());
-            return new ApiResponse(SUCCESS, 200, destination);
+            Destination destination = destinationOptional.get();
+            destination.setName(destinationDto.getName());
+            destination.setCode(destinationDto.getCode());
+            return new ApiResponse(SUCCESS, 200, destinationRepository.save(destination));
         }
         throw new CustomException(NOT_FOUND);
     }
 
     @Override
-    public ApiResponse deleteById(UUID id) {
+    public ApiResponse deleteById(Long id) {
         Optional<Destination> destination = destinationRepository.findById(id);
         if (destination.isPresent()) {
             destinationRepository.delete(destination.get());

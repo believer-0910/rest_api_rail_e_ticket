@@ -15,7 +15,7 @@ import java.util.UUID;
 public class TrainController {
     private final TrainService trainService;
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<?> addTrain(
             @RequestBody @Valid TrainDto trainDto
     ) {
@@ -24,19 +24,19 @@ public class TrainController {
 
     @GetMapping("/search")
     public ResponseEntity<?> getTrainById(
-            @RequestParam("id") UUID id
+            @RequestParam("id") Long id
     ) {
         return ResponseEntity.ok(trainService.getById(id));
     }
 
-    @GetMapping("/list")
+    @GetMapping
     public ResponseEntity<?> getTrainList(){
         return ResponseEntity.ok(trainService.getList());
     }
 
     @PutMapping("{id}")
     public ResponseEntity<?> updateTrain(
-            @PathVariable("id") UUID id,
+            @PathVariable("id") Long id,
             @RequestBody TrainDto trainDto
     ) {
         return ResponseEntity.ok(trainService.updateById(id, trainDto));
@@ -44,7 +44,7 @@ public class TrainController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> deleteTrain(
-            @PathVariable("id") UUID id
+            @PathVariable("id") Long id
     ) {
         return ResponseEntity.ok(trainService.deleteById(id));
     }

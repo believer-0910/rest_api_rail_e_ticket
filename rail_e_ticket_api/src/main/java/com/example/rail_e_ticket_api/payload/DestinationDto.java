@@ -12,6 +12,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class DestinationDto {
 
+    Long id;
+
     @NotNull
     private String name;
 

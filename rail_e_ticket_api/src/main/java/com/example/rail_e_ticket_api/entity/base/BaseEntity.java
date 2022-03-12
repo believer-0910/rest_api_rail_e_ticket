@@ -23,12 +23,10 @@ import java.util.UUID;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
     @Id
-    @GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
-    @GeneratedValue(generator = "UUIDGenerator")
-    @Column(name = "id", updatable = false, nullable = false)
-    UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
 
-    private boolean isActive = true;
+    private boolean active = true;
 
     @CreationTimestamp
     private LocalDateTime createdDate;
@@ -41,5 +39,8 @@ public abstract class BaseEntity {
 
     @LastModifiedBy
     private String updatedBy;
+
+
+
 
 }

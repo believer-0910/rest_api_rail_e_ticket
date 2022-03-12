@@ -13,6 +13,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class StationDto {
 
+    private Long id;
+
     @NotNull
     private Destination destination;
 

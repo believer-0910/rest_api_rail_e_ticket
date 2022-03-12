@@ -12,6 +12,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class TrainDto {
 
+    private Long id;
+
     @NotNull
     private String type;
 

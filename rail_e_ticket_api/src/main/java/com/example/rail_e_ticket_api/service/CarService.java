@@ -1,6 +1,7 @@
 package com.example.rail_e_ticket_api.service;
 
 import com.example.rail_e_ticket_api.exception.CustomException;
+import com.example.rail_e_ticket_api.repository.TrainRepository;
 import com.example.rail_e_ticket_api.response.ApiResponse;
 import com.example.rail_e_ticket_api.service.base.BaseService;
 import com.example.rail_e_ticket_api.payload.CarDto;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static com.example.rail_e_ticket_api.util.interfaces.ResponseConstants.NOT_FOUND;
 import static com.example.rail_e_ticket_api.util.interfaces.ResponseConstants.SUCCESS;
@@ -22,18 +22,24 @@ import static com.example.rail_e_ticket_api.util.interfaces.ResponseConstants.SU
 public class CarService implements BaseService<CarDto> {
 
     private final CarRepository carRepository;
-    private final ModelMapper modelMapper;
+    private final TrainRepository trainRepository;
 
     @Override
     public ApiResponse add(CarDto carDto) {
         checkCar(carDto.getCode());
-        Car car = modelMapper.map(carDto, Car.class);
+        Car car = new Car(
+                trainRepository.findById(carDto.getTrainId()).get(),
+                carDto.getType(),
+                carDto.getCode(),
+                carDto.getPrice(),
+                carDto.getNumSeats()
+        );
         carRepository.save(car);
         return new ApiResponse(SUCCESS, 200, car);
     }
 
     @Override
-    public ApiResponse getById(UUID id) {
+    public ApiResponse getById(Long id) {
         Optional<Car> carOptional = carRepository.findById(id);
         if (carOptional.isPresent())
             return new ApiResponse(SUCCESS, 200, carOptional.get());
@@ -47,11 +53,15 @@ public class CarService implements BaseService<CarDto> {
     }
 
     @Override
-    public ApiResponse updateById(UUID id, CarDto carDto) {
+    public ApiResponse updateById(Long id, CarDto carDto) {
         Optional<Car> optionalCar = carRepository.findById(id);
         if (optionalCar.isPresent()) {
-            Car car = modelMapper.map(carDto, Car.class);
-            car.setId(id);
+            Car car = optionalCar.get();
+            car.setTrain(trainRepository.findById(carDto.getTrainId()).get());
+            car.setType(carDto.getType());
+            car.setCode(carDto.getCode());
+            car.setPrice(carDto.getPrice());
+            car.setNumSeats(carDto.getNumSeats());
             carRepository.save(car);
             return new ApiResponse(SUCCESS, 200, car);
         }
@@ -59,9 +69,9 @@ public class CarService implements BaseService<CarDto> {
     }
 
     @Override
-    public ApiResponse deleteById(UUID id) {
+    public ApiResponse deleteById(Long id) {
         Optional<Car> optionalCar = carRepository.findById(id);
-        if (optionalCar.isPresent()){
+        if (optionalCar.isPresent()) {
             carRepository.deleteById(optionalCar.get().getId());
             return new ApiResponse(SUCCESS, 200, optionalCar.get());
         }

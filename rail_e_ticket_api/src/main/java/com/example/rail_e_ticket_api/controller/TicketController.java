@@ -21,7 +21,7 @@ public class TicketController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> getTicketById(@RequestParam("id") UUID id) {
+    public ResponseEntity<?> getTicketById(@RequestParam("id") Long id) {
         return ResponseEntity.ok(ticketService.getById(id));
     }
 
@@ -31,12 +31,12 @@ public class TicketController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> updateTicket(@PathVariable("id") UUID id, @RequestBody TicketDto ticketDto) {
+    public ResponseEntity<?> updateTicket(@PathVariable("id") Long id, @RequestBody TicketDto ticketDto) {
         return ResponseEntity.ok(ticketService.updateById(id, ticketDto));
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<?> deleteTicket(@PathVariable("id") UUID id) {
+    public ResponseEntity<?> deleteTicket(@PathVariable("id") Long id) {
         return ResponseEntity.ok(ticketService.deleteById(id));
     }
 }

@@ -24,7 +24,7 @@ public class PriceController {
 
     @GetMapping("/search")
     public ResponseEntity<?> getPriceById(
-            @RequestParam("id") UUID id
+            @RequestParam("id") Long id
     ) {
         return ResponseEntity.ok(priceService.getById(id));
     }
@@ -36,7 +36,7 @@ public class PriceController {
 
     @PutMapping("{id}")
     public ResponseEntity<?> updatePrice(
-            @PathVariable("id") UUID id,
+            @PathVariable("id") Long id,
             @RequestBody PriceDto priceDto
     ) {
         return ResponseEntity.ok(priceService.updateById(id, priceDto));
@@ -44,7 +44,7 @@ public class PriceController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> deletePrice(
-            @PathVariable("id") UUID id
+            @PathVariable("id") Long id
     ) {
         return ResponseEntity.ok(priceService.deleteById(id));
     }

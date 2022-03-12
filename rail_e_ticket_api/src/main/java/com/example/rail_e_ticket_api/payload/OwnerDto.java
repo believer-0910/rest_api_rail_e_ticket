@@ -7,12 +7,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class OwnerDto {
+    private Long id;
+
     @NotNull
     private String name;
 
@@ -26,6 +29,5 @@ public class OwnerDto {
     private String password;
 
     @NotNull
-    @JsonProperty("user_role")
-    private int userRole;
+    private int permissions;
 }

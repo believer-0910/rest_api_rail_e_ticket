@@ -16,7 +16,7 @@ public class ApiResponse {
     private String message;
     @JsonProperty("status_code")
     private int statusCode;
-    private Object object;
+    private Object data;
     private boolean success;
 
     public ApiResponse(String message, int statusCode) {
@@ -24,10 +24,10 @@ public class ApiResponse {
         this.statusCode = statusCode;
     }
 
-    public ApiResponse(String message, int statusCode, Object object) {
+    public ApiResponse(String message, int statusCode, Object data) {
         this.message = message;
         this.statusCode = statusCode;
-        this.object = object;
+        this.data = data;
     }
 
     public ApiResponse(String message, int statusCode, boolean success) {

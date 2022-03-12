@@ -34,7 +34,7 @@ public class TrainDestinationService implements BaseService<TrainDestinationDto>
     }
 
     @Override
-    public ApiResponse getById(UUID id) {
+    public ApiResponse getById(Long id) {
         Optional<TrainDestination> trainDestination = trainDestinationRepository.findById(id);
         if (trainDestination.isPresent()){
             return new ApiResponse(SUCCESS, 200, trainDestination.get());
@@ -50,7 +50,7 @@ public class TrainDestinationService implements BaseService<TrainDestinationDto>
     }
 
     @Override
-    public ApiResponse updateById(UUID id, TrainDestinationDto trainDestinationDto) {
+    public ApiResponse updateById(Long id, TrainDestinationDto trainDestinationDto) {
         Optional<TrainDestination> trainDestination = trainDestinationRepository.findById(id);
         if (trainDestination.isPresent()){
             TrainDestination trainDestination1 = mapper.map(trainDestinationDto, TrainDestination.class);
@@ -61,7 +61,7 @@ public class TrainDestinationService implements BaseService<TrainDestinationDto>
     }
 
     @Override
-    public ApiResponse deleteById(UUID id) {
+    public ApiResponse deleteById(Long id) {
         Optional<TrainDestination> trainDestinationRepositoryById = trainDestinationRepository.findById(id);
         if (trainDestinationRepositoryById.isPresent()){
             trainDestinationRepository.delete(trainDestinationRepositoryById.get());

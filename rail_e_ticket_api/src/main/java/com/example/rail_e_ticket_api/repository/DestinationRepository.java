@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface DestinationRepository extends JpaRepository<Destination, UUID> {
+public interface DestinationRepository extends JpaRepository<Destination, Long> {
     Optional<Destination> findByCode(int code);
 }
