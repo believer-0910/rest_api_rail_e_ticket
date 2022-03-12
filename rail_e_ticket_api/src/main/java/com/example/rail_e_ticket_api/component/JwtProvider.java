@@ -13,7 +13,7 @@ public class JwtProvider {
     private final String secretKey="arra";
 
     public String generate(Owner owner){
-        long expire=600_000;
+        long expire=3600_000;
         return Jwts
                 .builder()
                 .setIssuedAt(new Date())

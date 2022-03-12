@@ -21,5 +21,5 @@ public class Destination extends BaseEntity {
     private String name;
 
     @Column(unique = true, nullable = false)
-    private int code;
+    private Integer code;
 }

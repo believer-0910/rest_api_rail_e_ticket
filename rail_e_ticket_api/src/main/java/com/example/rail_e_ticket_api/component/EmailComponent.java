@@ -13,8 +13,9 @@ import static com.example.rail_e_ticket_api.util.interfaces.Url.*;
 @RequiredArgsConstructor
 public class EmailComponent {
 
-    @Autowired
-    JavaMailSender javaMailSender;
+
+    private final JavaMailSender javaMailSender;
+
     public void sendToRegistration(String mail) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();

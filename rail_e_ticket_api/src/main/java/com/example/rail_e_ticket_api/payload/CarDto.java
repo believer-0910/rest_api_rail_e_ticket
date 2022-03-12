@@ -1,6 +1,5 @@
 package com.example.rail_e_ticket_api.payload;
 
-import com.example.rail_e_ticket_api.entity.Train;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

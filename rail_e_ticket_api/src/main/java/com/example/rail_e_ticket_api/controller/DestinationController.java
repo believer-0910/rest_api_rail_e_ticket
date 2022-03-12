@@ -3,10 +3,15 @@ package com.example.rail_e_ticket_api.controller;
 import com.example.rail_e_ticket_api.payload.DestinationDto;
 import com.example.rail_e_ticket_api.service.DestinationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -17,7 +22,7 @@ public class DestinationController {
     private final DestinationService destinationService;
 
     @PostMapping
-    public ResponseEntity<?> addDestination(@RequestBody @Valid DestinationDto destinationDto) {
+    public ResponseEntity<?> addDestination(@Valid @RequestBody DestinationDto destinationDto) {
         return ResponseEntity.ok(destinationService.add(destinationDto));
     }
 

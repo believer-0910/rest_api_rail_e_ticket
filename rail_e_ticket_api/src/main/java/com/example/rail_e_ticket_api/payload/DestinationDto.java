@@ -1,10 +1,11 @@
 package com.example.rail_e_ticket_api.payload;
 
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -18,5 +19,5 @@ public class DestinationDto {
     private String name;
 
     @NotNull
-    private int code;
+    private Integer code;
 }
